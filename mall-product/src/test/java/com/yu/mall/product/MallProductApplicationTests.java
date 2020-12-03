@@ -10,14 +10,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 class MallProductApplicationTests {
 
 	@Autowired
-	BrandService brandService;
+	private BrandService brandService;
 
 	@Test
 	void contextLoads() {
 		BrandEntity brandEntity = new BrandEntity();
-		brandEntity.setName("华为");
-		brandService.save(brandEntity);
-		System.out.println("添加成功");
+		brandEntity.setBrandId(1L);
+		brandEntity.setDescript("华为");
+
+//		brandEntity.setName("华为");
+//		brandService.save(brandEntity);
+//		System.out.println("添加成功");
+
+		brandService.updateById(brandEntity);
+		System.out.println("修改成功");
 	}
 
 }

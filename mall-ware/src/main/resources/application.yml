@@ -1,0 +1,21 @@
+server:
+  port: 11000
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.222.222:3305/mall_wms?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=GMT&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+
+
+#mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto  #主键递增
+  #配置打印sql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

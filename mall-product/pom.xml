@@ -43,10 +43,9 @@
 
 		<dependency>
 			<groupId>com.yu.mall</groupId>
-			<artifactId>mall-commom</artifactId>
+			<artifactId>mall-common</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-
 	</dependencies>
 
 	<dependencyManagement>
