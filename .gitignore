@@ -16,6 +16,17 @@ buildNumber.properties
 **/.mvn
 **/target/
 
-.idea
+**/.idea
 
 **/.gitignore
+
+*.iml
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
