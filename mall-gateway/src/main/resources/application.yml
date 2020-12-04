@@ -1,0 +1,18 @@
+server:
+  port: 88
+
+#配置网关
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: baidu_route
+          uri: https://www.baidu.com
+          predicates:
+            - Path=/baidu
+
+        - id: qq_route
+          uri: https://www.qq.com
+          predicates:
+            - Path=/qq
+
