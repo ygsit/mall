@@ -19,6 +19,7 @@
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
     </properties>
 
+    <!--注意：不要引入spring-boot-starter-web包，会导致Gateway启动抛出异常，错误如下。因为Spring Cloud Gateway 是使用 netty+webflux实现，webflux与web是冲突的。-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

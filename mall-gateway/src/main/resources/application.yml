@@ -6,13 +6,13 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: baidu_route
-          uri: https://www.baidu.com
+        - id: guonei_route
+          uri: http://news.baidu.com
           predicates:
-            - Path=/baidu
+            - Path=/guonei   # http://news.baidu.com/guonei
 
-        - id: qq_route
-          uri: https://www.qq.com
+        - id: guoji_route
+          uri: http://news.baidu.com
           predicates:
-            - Path=/qq
+            - Path=/guoji   # http://news.baidu.com/guoji
 
