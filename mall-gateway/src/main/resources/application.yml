@@ -4,15 +4,39 @@ server:
 #配置网关
 spring:
   cloud:
+    #nacos配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+    #gateway配置
     gateway:
       routes:
-        - id: guonei_route
-          uri: http://news.baidu.com
-          predicates:
-            - Path=/guonei   # http://news.baidu.com/guonei
+#        - id: guonei_route
+#          uri: http://news.baidu.com
+#          predicates:
+#            - Path=/guonei   # http://news.baidu.com/guonei
+#
+#        - id: guoji_route
+#          uri: http://news.baidu.com
+#          predicates:
+#            - Path=/guoji   # http://news.baidu.com/guoji
 
-        - id: guoji_route
-          uri: http://news.baidu.com
+        #路径比较精确的放在上面，反正被转发
+        - id: admin_route
+          uri: lb://mall-product
           predicates:
-            - Path=/guoji   # http://news.baidu.com/guoji
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment} #重写路径
+          ## 前端发的：http://localhost:88/api/product/category/list/tree，后台要接收的：http://localhost:10000/product/category/list/tree，需要路径重写
+
+
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment} #重写路径
+          ## 前端发的：http://localhost:88/api/captcha.jpg，后台要接收的：http://localhost:8080/renren-fast/captcha.jpg，需要路径重写
 

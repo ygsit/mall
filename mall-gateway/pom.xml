@@ -38,6 +38,7 @@
             </exclusions>
         </dependency>
 
+        <!--引入common依赖-->
         <dependency>
             <groupId>com.yu.mall</groupId>
             <artifactId>mall-common</artifactId>
