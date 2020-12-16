@@ -42,7 +42,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<CategoryEntity> level1Menus = entities.stream()
                 .filter(categoryEntity -> categoryEntity.getCatLevel() == 1) //筛选所有的一级分类
                 .map(categoryEntity -> {
-                        categoryEntity.setChildern(getChildren(categoryEntity, entities));
+                        categoryEntity.setChildren(getChildren(categoryEntity, entities));
                         return categoryEntity;
                     })
                 .sorted((obj1, obj2) -> {
@@ -51,6 +51,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .collect(Collectors.toList());
 
         return level1Menus;
+    }
+
+    @Override
+    public void removeMenuByIds(List<Long> asList) {
+        //TODO 1、检查当前删除的菜单，是否被别的地方调用
+
+        baseMapper.deleteBatchIds(asList);
     }
 
     /**
@@ -64,9 +71,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             return null;
         }*/
         List<CategoryEntity> children = all.stream().filter(categoryEntity -> {
-            return categoryEntity.getParentCid() == root.getCatId();   //找出第一层子菜单
+            //判断两个Long类型是否相等不能用==(如果Long的值在[-127,128]之间可以)，不在范围之间可以用A.equals(B)或A.longValue()==B.longValue()
+            return categoryEntity.getParentCid().equals( root.getCatId());   //找出第一层子菜单
         }).map(categoryEntity -> { //如果子菜单下面还存在子菜单，遍历找第二层子菜单
-            categoryEntity.setChildern(getChildren(categoryEntity, all));
+            categoryEntity.setChildren(getChildren(categoryEntity, all));
             return categoryEntity;
         }).sorted((obj1, obj2) -> {
             return (obj1.getSort() == null ? 0 : obj1.getSort()) - (obj2.getSort() == null ? 0 : obj2.getSort());

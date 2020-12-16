@@ -22,8 +22,8 @@ spring:
 #          predicates:
 #            - Path=/guoji   # http://news.baidu.com/guoji
 
-        #路径比较精确的放在上面，反正被转发
-        - id: admin_route
+        #路径比较精确的放在上面，防止被转发走
+        - id: product_route
           uri: lb://mall-product
           predicates:
             - Path=/api/product/**

@@ -2,6 +2,7 @@ package com.yu.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -42,6 +43,8 @@ public class CategoryEntity implements Serializable {
 	/**
 	 * 是否显示[0-不显示，1显示]
 	 */
+	//逻辑删除注解，若与全局逻辑删除值不一致，可配置值(value和delval的值)
+	@TableLogic(value = "1", delval = "0")
 	private Integer showStatus;
 	/**
 	 * 排序
@@ -61,6 +64,6 @@ public class CategoryEntity implements Serializable {
 	private Integer productCount;
 
 	@TableField(exist = false) //表示增加一个表中不存在的字段
-	private List<CategoryEntity> childern; //增加子分类集合属性
+	private List<CategoryEntity> children; //增加子分类集合属性
 
 }
