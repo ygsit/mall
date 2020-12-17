@@ -42,12 +42,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<CategoryEntity> level1Menus = entities.stream()
                 .filter(categoryEntity -> categoryEntity.getCatLevel() == 1) //筛选所有的一级分类
                 .map(categoryEntity -> {
-                        categoryEntity.setChildren(getChildren(categoryEntity, entities));
-                        return categoryEntity;
-                    })
+                    categoryEntity.setChildren(getChildren(categoryEntity, entities));
+                    return categoryEntity;
+                })
                 .sorted((obj1, obj2) -> {
                     return (obj1.getSort() == null ? 0 : obj1.getSort()) - (obj2.getSort() == null ? 0 : obj2.getSort());
-                    })
+                })
                 .collect(Collectors.toList());
 
         return level1Menus;
@@ -62,6 +62,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 递归获取当前对象的子菜单
+     *
      * @param root
      * @param all
      * @return
@@ -72,15 +73,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         }*/
         List<CategoryEntity> children = all.stream().filter(categoryEntity -> {
             //判断两个Long类型是否相等不能用==(如果Long的值在[-127,128]之间可以)，不在范围之间可以用A.equals(B)或A.longValue()==B.longValue()
-            return categoryEntity.getParentCid().equals( root.getCatId());   //找出第一层子菜单
+            return categoryEntity.getParentCid().equals(root.getCatId());   //找出第一层子菜单
         }).map(categoryEntity -> { //如果子菜单下面还存在子菜单，遍历找第二层子菜单
             categoryEntity.setChildren(getChildren(categoryEntity, all));
             return categoryEntity;
-        }).sorted((obj1, obj2) -> {
-            return (obj1.getSort() == null ? 0 : obj1.getSort()) - (obj2.getSort() == null ? 0 : obj2.getSort());
-        }).collect(Collectors.toList());
+        }).sorted((t1, t2) -> Integer.compare((t1.getSort() == null ? 0 : t1.getSort()), (t2.getSort() == null ? 0 : t2.getSort())))
+                .collect(Collectors.toList());
 
-        return  children;
+        return children;
     }
 
 }
