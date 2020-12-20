@@ -23,6 +23,7 @@ spring:
 #            - Path=/guoji   # http://news.baidu.com/guoji
 
         #路径比较精确的放在上面，防止被转发走
+        #商品网关
         - id: product_route
           uri: lb://mall-product
           predicates:
@@ -31,6 +32,14 @@ spring:
             - RewritePath=/api/(?<segment>.*),/$\{segment} #重写路径
           ## 前端发的：http://localhost:88/api/product/category/list/tree，后台要接收的：http://localhost:10000/product/category/list/tree，需要路径重写
 
+        #第三方服务网关
+        - id: third_party_route
+          uri: lb://mall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment} #重写路径
+          ## 前端发的：http://localhost:88/api/thirdparty/oss/policy，后台要接收的：http://localhost:30000/oss/policy，需要路径重写
 
         - id: admin_route
           uri: lb://renren-fast
