@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.yu.common.valid.AddGroup;
 import com.yu.common.valid.UpdateGroup;
+import com.yu.common.valid.UpdateStatusGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -21,6 +22,7 @@ import java.io.Serializable;
  *  *  @NotNull：可以作用于属性，对象，集合，不能为null，但可以为empty,没有Size的约束(空串也可以)
  *  *  @NotEmpty：可以作用于属性，对象，集合，不能为null或者长度为0(" "可以)
  *  *  @NotBlank：只用于String,不能为null且trim()之后size>0
+ *  若添加分组属性，没加分组的则不会执行
  */
 @Data
 @TableName("pms_brand")
@@ -52,7 +54,7 @@ public class BrandEntity implements Serializable {
 	/**
 	 * 显示状态[0-不显示；1-显示]
 	 */
-	@NotNull(message = "显示状态不能为空") //没加分组不会执行
+	@NotNull(message = "显示状态不能为空", groups = UpdateStatusGroup.class)
 	private Integer showStatus;
 	/**
 	 * 检索首字母

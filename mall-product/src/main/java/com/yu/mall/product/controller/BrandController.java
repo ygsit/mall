@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.yu.common.valid.AddGroup;
 import com.yu.common.valid.UpdateGroup;
+import com.yu.common.valid.UpdateStatusGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,6 +76,17 @@ public class BrandController {
     //@RequiresPermissions("product:brand:update")
     public R update(@Validated(UpdateGroup.class) @RequestBody BrandEntity brand){
 		brandService.updateById(brand);
+
+        return R.ok();
+    }
+
+    /**
+     * 修改
+     */
+    @RequestMapping("/update/status")
+    //@RequiresPermissions("product:brand:update:status")
+    public R updateStatus(@Validated(UpdateStatusGroup.class) @RequestBody BrandEntity brand){
+        brandService.updateById(brand);
 
         return R.ok();
     }
