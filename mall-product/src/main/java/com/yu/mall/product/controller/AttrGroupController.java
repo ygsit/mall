@@ -1,19 +1,15 @@
 package com.yu.mall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.yu.mall.product.entity.AttrGroupEntity;
-import com.yu.mall.product.service.AttrGroupService;
 import com.yu.common.utils.PageUtils;
 import com.yu.common.utils.R;
+import com.yu.mall.product.entity.AttrGroupEntity;
+import com.yu.mall.product.service.AttrGroupService;
+import com.yu.mall.product.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -30,13 +26,16 @@ public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @RequestMapping("/list/{id}")
     //@RequiresPermissions("product:attrgroup:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = attrGroupService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params, @PathVariable("id") long catelogId){
+        PageUtils page = attrGroupService.queryPage(params, catelogId);
 
         return R.ok().put("page", page);
     }
@@ -49,6 +48,11 @@ public class AttrGroupController {
     //@RequiresPermissions("product:attrgroup:info")
     public R info(@PathVariable("attrGroupId") Long attrGroupId){
 		AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
+
+		//获取分类的级联关系
+        Long[] path = categoryService.getCatelogPath(attrGroup.getCatelogId());
+
+		attrGroup.setCatelogPath(path);
 
         return R.ok().put("attrGroup", attrGroup);
     }

@@ -1,24 +1,30 @@
 package com.yu.mall.product.service.impl;
 
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yu.common.utils.PageUtils;
 import com.yu.common.utils.Query;
-
+import com.yu.mall.product.dao.CategoryBrandRelationDao;
 import com.yu.mall.product.dao.CategoryDao;
 import com.yu.mall.product.entity.CategoryEntity;
 import com.yu.mall.product.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+    @Autowired
+    private CategoryBrandRelationDao categoryBrandRelationDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -59,6 +65,42 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
         baseMapper.deleteBatchIds(asList);
     }
+
+    @Override
+    public Long[] getCatelogPath(Long attrGroupId) {
+        List<Long> path = new ArrayList();
+
+        path = getParentCateId(path, attrGroupId);
+
+        Collections.reverse(path);
+
+        return path.toArray(new Long[path.size()]);
+    }
+
+    @Transactional
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        if(!StringUtils.isEmpty(category.getName())){
+            //更新关联表的信息
+            categoryBrandRelationDao.updateCategory(category.getCatId(), category.getName());
+        }
+    }
+
+    /**
+     * 递归获取当前对象的父分类id
+     */
+    private List getParentCateId(List<Long> path, Long attrGroupId) {
+        //收集当前传入id
+        path.add(attrGroupId);
+        //根据id查找父id
+        CategoryEntity selectById = baseMapper.selectById(attrGroupId);
+        if(selectById.getParentCid() != 0){
+            getParentCateId(path, selectById.getParentCid());
+        }
+        return path;
+    }
+
 
     /**
      * 递归获取当前对象的子菜单

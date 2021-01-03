@@ -12,5 +12,12 @@
         <result property="catelogName" column="catelog_name"/>
     </resultMap>
 
+    <update id="updateBrand">
+        update pms_category_brand_relation set brand_name = #{brandName} where brand_id = #{brandId}
+    </update>
+
+    <update id="updateCategory">
+        update pms_category_brand_relation set catelog_name = #{catelogName} where catelog_id = #{catelogId}
+    </update>
 
 </mapper>

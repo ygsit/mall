@@ -1,25 +1,18 @@
 package com.yu.mall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
+import com.yu.common.utils.PageUtils;
+import com.yu.common.utils.R;
 import com.yu.common.valid.AddGroup;
 import com.yu.common.valid.UpdateGroup;
 import com.yu.common.valid.UpdateStatusGroup;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.yu.mall.product.entity.BrandEntity;
 import com.yu.mall.product.service.BrandService;
-import com.yu.common.utils.PageUtils;
-import com.yu.common.utils.R;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.Map;
 
 
 /**
@@ -75,7 +68,9 @@ public class BrandController {
     @RequestMapping("/update")
     //@RequiresPermissions("product:brand:update")
     public R update(@Validated(UpdateGroup.class) @RequestBody BrandEntity brand){
-		brandService.updateById(brand);
+//		brandService.updateById(brand);
+        //级联更新
+        brandService.updateCascade(brand);
 
         return R.ok();
     }
