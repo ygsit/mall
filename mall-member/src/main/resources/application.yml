@@ -8,11 +8,9 @@ spring:
     url: jdbc:mysql://192.168.222.222:3306/mall_ums?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: 123456
-  #服务应用名
-  application:
-    name: mall-member
-  #nacos注册中心配置
+
   cloud:
+    #nacos注册中心配置
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
