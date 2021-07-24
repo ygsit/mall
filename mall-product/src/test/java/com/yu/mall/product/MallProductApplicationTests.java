@@ -27,13 +27,12 @@ class MallProductApplicationTests {
 	@Test
 	void contextLoads() {
 		BrandEntity brandEntity = new BrandEntity();
-		brandEntity.setBrandId(1L);
-		brandEntity.setDescript("华为");
-
 //		brandEntity.setName("华为");
 //		brandService.save(brandEntity);
 //		System.out.println("添加成功");
 
+		brandEntity.setBrandId(1L);
+		brandEntity.setDescript("华为");
 		brandService.updateById(brandEntity);
 		System.out.println("修改成功");
 	}
