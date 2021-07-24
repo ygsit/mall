@@ -9,7 +9,7 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
 
-    #gateway配置
+    #gateway配置：满足断言(predicates)要求就跳转uri，然后通过filter在请求发出前后进行一些业务上的处理
     gateway:
       routes:
 #        - id: guonei_route
