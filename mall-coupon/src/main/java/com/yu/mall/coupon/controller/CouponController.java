@@ -31,6 +31,18 @@ public class CouponController {
     private CouponService couponService;
 
     /**
+     * 测试feign调用
+     */
+    @RequestMapping("/getCoupons")
+    public R getCoupons(){
+        CouponEntity couponEntity = new CouponEntity();
+        couponEntity.setCouponName("满一百减二十");
+        CouponEntity couponEntity2 = new CouponEntity();
+        couponEntity2.setCouponName("满二百减五十");
+        return R.ok().put("coupons", Arrays.asList(couponEntity, couponEntity2));
+    }
+
+    /**
      * 列表
      */
     @RequestMapping("/list")

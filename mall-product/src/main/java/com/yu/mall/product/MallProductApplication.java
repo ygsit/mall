@@ -52,7 +52,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *  2）、使用@ExceptionHandler标注方法可以处理的异常。
  */
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableDiscoveryClient //开启服务注册与发现
 public class MallProductApplication {
 
 	public static void main(String[] args) {

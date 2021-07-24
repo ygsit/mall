@@ -8,7 +8,9 @@ spring:
     url: jdbc:mysql://192.168.222.222:3306/mall_pms?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: 123456
-
+  #服务应用名
+  application:
+    name: mall-product
   #nacos注册中心配置
   cloud:
     nacos:

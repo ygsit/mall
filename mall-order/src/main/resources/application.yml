@@ -8,7 +8,14 @@ spring:
     url: jdbc:mysql://192.168.222.222:3306/mall_oms?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: 123456
-
+  #服务应用名
+  application:
+    name: mall-order
+  #nacos注册中心配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
 #mybatis-plus配置
 mybatis-plus:
